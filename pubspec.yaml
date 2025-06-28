@@ -1,0 +1,27 @@
+name: findie
+description: A new Flutter project.
+version: 1.0.0+1
+environment: 
+  sdk: ^3.6.0
+dependencies: 
+  flutter: 
+    sdk: flutter
+  cached_network_image: ^3.3.1
+  flutter_svg: ^2.0.9
+  shared_preferences: ^2.2.2
+  connectivity_plus: ^5.0.2
+  dio: ^5.4.0
+  fluttertoast: ^8.2.4
+  sizer: ^2.0.15
+  fl_chart: ^0.65.0
+  google_fonts: ^6.1.0
+  web: any
+dev_dependencies: 
+  flutter_test: 
+    sdk: flutter
+  flutter_lints: ^5.0.0
+flutter: 
+  uses-material-design: true
+  assets: 
+    - assets/
+    - assets/images/
