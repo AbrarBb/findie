@@ -66,6 +66,8 @@ verifications (id, user_id, id_image_url, extracted_name, extracted_dob, status,
 6. **Item Details**: Full item view with messaging
 7. **Profile**: User info, verification, and posted items
 8. **Messages**: Real-time chat conversations
+9. **Verification**: ID upload and verification process
+10. **Admin Panel**: Manage posts, verifications, and reports
 
 ## 🔧 Setup Instructions
 
@@ -92,10 +94,16 @@ flutter pub get
    - Create a new Supabase project
    - Run the migration files in `supabase/migrations/`
    - Deploy the Edge Functions in `supabase/functions/`
-   - Update `lib/core/supabase_config.dart` with your project URL and keys
+   - Update `env.json` with your project URL and keys
 
 4. **Configure environment**
-   - Update Supabase URL and keys in `supabase_config.dart`
+   - Copy `env.json` and update with your Supabase credentials:
+   ```json
+   {
+     "SUPABASE_URL": "your-project-url",
+     "SUPABASE_ANON_KEY": "your-anon-key"
+   }
+   ```
    - Set up storage buckets: `post-images`, `avatars`, `verification-docs`
 
 5. **Run the app**
@@ -198,6 +206,36 @@ flutter build ios --release
 - Supabase handles all backend deployment
 - Edge Functions auto-deploy from Git
 - Database migrations via Supabase CLI
+
+## 🔧 Edge Functions
+
+### Available Functions
+1. **extract-ocr-text**: Extract text from uploaded images
+2. **verify-identity**: Verify user identity documents
+3. **auto-expire-posts**: Automatically remove expired posts
+
+### Deployment
+```bash
+# Deploy all functions
+supabase functions deploy
+
+# Deploy specific function
+supabase functions deploy extract-ocr-text
+```
+
+## 🛡️ Admin Features
+
+### Admin Panel
+- View platform statistics
+- Manage user verifications
+- Handle reported posts
+- Run maintenance tasks
+
+### Moderation Tools
+- Review flagged content
+- Approve/reject verifications
+- Extend post expiry dates
+- Generate analytics reports
 
 ## 🤝 Contributing
 

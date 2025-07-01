@@ -1,15 +1,34 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
 
 class SupabaseConfig {
-  static const String supabaseUrl = 'https://your-project.supabase.co';
-  static const String supabaseAnonKey = 'your-anon-key';
+  static late String _supabaseUrl;
+  static late String _supabaseAnonKey;
   
   static Future<void> initialize() async {
-    await Supabase.initialize(
-      url: supabaseUrl,
-      anonKey: supabaseAnonKey,
-      debug: true,
-    );
+    try {
+      // Load environment variables from env.json
+      final String envString = await rootBundle.loadString('env.json');
+      final Map<String, dynamic> env = json.decode(envString);
+      
+      _supabaseUrl = env['SUPABASE_URL'] ?? 'https://dummy.supabase.co';
+      _supabaseAnonKey = env['SUPABASE_ANON_KEY'] ?? 'dummykey.updateyourkkey.here';
+      
+      await Supabase.initialize(
+        url: _supabaseUrl,
+        anonKey: _supabaseAnonKey,
+        debug: true,
+      );
+    } catch (e) {
+      print('Error initializing Supabase: $e');
+      // Fallback to dummy values for development
+      await Supabase.initialize(
+        url: 'https://dummy.supabase.co',
+        anonKey: 'dummykey.updateyourkkey.here',
+        debug: true,
+      );
+    }
   }
   
   static SupabaseClient get client => Supabase.instance.client;
